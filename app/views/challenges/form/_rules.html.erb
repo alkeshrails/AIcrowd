@@ -2,18 +2,20 @@
 <span class="label-text">Rules</span>
 
 <% if @challenge.current_challenge_rules %>
-  <%= render 'challenge_rules/challenge_rules', challenge_rules: @challenge.current_challenge_rules, challenge: @challenge, organizer: @organizer %>
+    <div class="md-content">
+      <%= sanitize(@challenge.current_challenge_rules.terms) %>
+    </div>
 <% else %>
   No rules added yet
 <% end %>
 <hr/>
 
 <div class="links">
-<%= link_to_add_association 'Set challenge rules',f,:challenge_rules,
-html_options = {
-  partial: 'challenges/form/challenge_rules_fields',
-  class: 'form-text',
-    id: 'replace-rules-button' } %>
+<%= link_to_add_association 'Set challenge rules', f, :challenge_rules,
+                            html_options = {
+                                partial: 'challenges/form/challenge_rules_fields',
+                                class: 'form-text',
+                                id: 'replace-rules-button' } %>
 </div>
 <%= render partial: 'challenges/form/submit_buttons', locals: { f: f } %>
 <% end %>

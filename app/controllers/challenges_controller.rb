@@ -75,8 +75,7 @@ class ChallengesController < ApplicationController
 
   def update
     if @challenge.update(challenge_params)
-      redirect_to [@organizer, @challenge],
-                  notice: 'Challenge updated.'
+      redirect_to challenge_path(@challenge), notice: 'Challenge updated.'
     else
       render :edit
     end
@@ -152,6 +151,7 @@ class ChallengesController < ApplicationController
           :max_team_participants,
           :team_freeze_time,
           :latest_submission,
+          :description,
           :description_markdown,
           :rules_markdown,
           :prizes_markdown,

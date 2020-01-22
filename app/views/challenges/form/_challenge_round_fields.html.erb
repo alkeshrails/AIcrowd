@@ -77,9 +77,9 @@
 </div>
 
 <label>Leaderboard Message</label>
-<%= markdown_editor do |m| %>
-<%= f.text_area :leaderboard_note_markdown, class: "form-control" %>
-<% end %>
+<div class="md-content">
+  <%= f.text_area :leaderboard_note, class: "form-control", data: {controller: "ckeditor"} %>
+</div>
 
 <% if current_participant.admin? && f.object.persisted?%>
 round_id: <%= f.object.id %>

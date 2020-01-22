@@ -31,7 +31,6 @@
 //= require modules/subnav_tabs
 //= require modules/inline_validations
 //= require modules/rangy_inputs
-//= require modules/markdown_editor
 //= require modules/flash_messages
 //= require modules/direct_s3_upload
 //= require modules/mentions
