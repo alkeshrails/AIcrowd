@@ -1,17 +1,13 @@
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Controller } from 'stimulus';
-
-
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default class extends Controller {
     connect() {
-        console.log("Hello, Stimulus!", this.element);
         ClassicEditor
             .create( this.element )
             .then( editor => {
                 editor.plugins.get( 'FileRepository' ).createUploadAdapter = loader => new Adapter( loader );
-                console.log(editor)
             })
             .catch(err => {console.log(err)});
     }

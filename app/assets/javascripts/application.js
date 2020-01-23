@@ -114,16 +114,3 @@ $(document).on("turbolinks:load", function () {
         $(".alert:not('.alert-cookie, .alert-fixed')").alert("close");
     }, 5000);
 });
-
-// Temporary Fix for Kramdown not supporting strikethrough  ~~
-$(document).ready(function () {
-    // Looks for strikethrough elements in .markdown-wrap class elements
-    // and wraps them in <del> tags
-    $(".markdown-wrap").each(function () {
-        $(this).html(
-            $(this)
-                .html()
-                .replace(/~~(.*?)~~/gim, "<del>$1</del>")
-        );
-    });
-});

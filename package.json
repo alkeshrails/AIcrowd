@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^16.0.0",
-    "@ckeditor/ckeditor5-build-inline": "^16.0.0",
     "@ckeditor/ckeditor5-upload": "^16.0.0",
     "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",

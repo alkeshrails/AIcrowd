@@ -48,38 +48,47 @@ Paloma.controller('Challenges', {
         })
     },
     show: function () {
-        let update_table_of_contents = function (heading_ids) {
-            let li;
-            let a;
+        document.querySelectorAll( 'oembed[url]' ).forEach( element => {
+            // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
+            // to discover the media.
+            const anchor = document.createElement( 'a' );
+
+            anchor.setAttribute( 'href', element.getAttribute( 'url' ) );
+            anchor.className = 'embedly-card';
+
+            element.appendChild( anchor );
+        } );
+
+        let update_table_of_contents = function (headings) {
             let toc = $("#table-of-contents");
-            let done = 0;
-            heading_ids.forEach(id => {
-                li = document.createElement("li");
-                a = document.createElement("a");
-                li.classList.add('nav-item');
-                a.classList.add('nav-link');
-                $(a).attr('href', '#' + id.replace(/[^a-z0-9_-]/gi, ''));
-                $(a).text(_.capitalize(id).replace(/-/g, ' '));
-                $(li).append(a);
-                toc.append(li);
+            $.each(headings, (idx, heading) => {
+                // Jqeury Object from DOM object
+                heading = $(heading);
+                let heading_content = heading.text();
+                heading.attr('id', heading_content);
+
+                let li = $('<li/>', {
+                    "class": 'nav-link',
+                }).appendTo(toc);
+
+                $('<a/>', {
+                    "class": 'nav-item',
+                    href: "#"+heading_content,
+                    text: _.capitalize(heading_content)
+                }).appendTo(li);
+
+                console.log(toc);
                 // Attach ScrollSpy only after the TOC has been generated.
-                done += 1;
-                if (done === heading_ids.length) {
+                if (idx === headings.length) {
+                    console.log("Generated!");
                     $('body').scrollspy({target: "#table-of-contents", offset: 64});
                 }
             });
         };
-        let escapeIds = function () {
-            let x = this.id;
-            // Remove special chars from the ID, to make sure scrollspy does not break.
-            this.id = x.replace(/[^a-z0-9_-]/gi, '');
-            // But return the original for displaying
-            return x;
-        };
         // NATE: Apparently challenges#show is not using turbolinks
         $(document).ready(function () {
-            let heading_ids = $("#description-wrapper h1").map(escapeIds).get().filter(e => e);
-            update_table_of_contents(heading_ids);
+            let headings = $("#description-wrapper h2").get();
+            update_table_of_contents(headings);
         });
     }
 });
