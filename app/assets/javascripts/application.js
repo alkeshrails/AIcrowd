@@ -41,7 +41,6 @@
 // require pages/email_preferences_edit
 
 // -------------------- Controllers ------------------- //
-//= require controllers/articles_controller
 //= require controllers/challenges_controller
 //= require controllers/leaderboards_controller
 //= require controllers/dataset_files_controller
@@ -60,6 +59,19 @@ document.addEventListener("turbolinks:load", function () {
     Paloma.start();
 });
 
+function setupOembed(){
+    document.querySelectorAll( 'oembed[url]' ).forEach( element => {
+        // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
+        // to discover the media.
+        const anchor = document.createElement( 'a' );
+
+        anchor.setAttribute( 'href', element.getAttribute( 'url' ) );
+        anchor.className = 'embedly-card';
+
+        element.appendChild( anchor );
+    } );
+};
+
 function loadMathJax() {
     window.MathJax = null;
     $.getScript(
@@ -77,8 +89,7 @@ function loadMathJax() {
 }
 
 // Remove default Turbolinks loader
-Turbolinks.ProgressBar.prototype.refresh = function () {
-};
+Turbolinks.ProgressBar.prototype.refresh = function () {};
 Turbolinks.ProgressBar.defaultCSS = "";
 var loaderTimer;
 
@@ -107,6 +118,7 @@ document.addEventListener("turbolinks:load", function () {
 
 $(document).on("turbolinks:load", function () {
     loadMathJax();
+    setupOembed();
 });
 
 $(document).on("turbolinks:load", function () {

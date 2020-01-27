@@ -20,7 +20,7 @@ class ChallengesController < ApplicationController
                           @all_challenges.where(status_cd: 'draft')
                         else
                           @all_challenges
-                  end
+                        end
     @challenges = if current_participant&.admin?
                     @challenges.page(params[:page]).per(20)
                   else
@@ -74,7 +74,7 @@ class ChallengesController < ApplicationController
   end
 
   def update
-    if @challenge.update(challenge_params)
+    if @challenge.update()
       redirect_to challenge_path(@challenge), notice: 'Challenge updated.'
     else
       render :edit
@@ -113,8 +113,7 @@ class ChallengesController < ApplicationController
   def set_challenge
     @challenge = Challenge.friendly.find(params[:id])
     if params[:version]
-      @challenge = @challenge
-                       .versions[params[:version].to_i].reify
+      @challenge = @challenge.versions[params[:version].to_i].reify
     end
     authorize @challenge
   end
@@ -130,8 +129,7 @@ class ChallengesController < ApplicationController
           :tagline,
           :status,
           :description,
-          :featured_sequence,
-          :evaluation_markdown,
+          :evaluation,
           :evaluation_criteria,
           :rules,
           :prizes,
@@ -152,15 +150,8 @@ class ChallengesController < ApplicationController
           :team_freeze_time,
           :latest_submission,
           :description,
-          :description_markdown,
-          :rules_markdown,
-          :prizes_markdown,
-          :resources_markdown,
-          :dataset_description_markdown,
-          :submission_instructions_markdown,
           :license,
-          :license_markdown,
-          :winner_description_markdown,
+          :winner_description,
           :winners_tab_active,
           :perpetual_challenge,
           :automatic_grading,
@@ -191,11 +182,11 @@ class ChallengesController < ApplicationController
           :grading_history,
           :post_challenge_submissions,
           :submissions_downloadable,
-          :dataset_note_markdown,
+          :dataset_note,
           :discussions_visible,
           :require_toc_acceptance,
           :toc_acceptance_text,
-          :toc_acceptance_instructions_markdown,
+          :toc_acceptance_instructions,
           :toc_accordion,
           dataset_attributes:                     [
             :id,
@@ -240,7 +231,7 @@ class ChallengesController < ApplicationController
             :ranking_highlight,
             :score_significant_digits,
             :score_secondary_significant_digits,
-            :leaderboard_note_markdown,
+            :leaderboard_note,
             :parallel_submissions,
             :_destroy
           ],
@@ -252,9 +243,9 @@ class ChallengesController < ApplicationController
           ],
           challenge_rules_attributes:             [
             :id,
-            :terms_markdown,
+            :terms,
             :has_additional_checkbox,
-            :additional_checkbox_text_markdown
+            :additional_checkbox_text
           ],
           invitations_attributes:                 [
             :id,
