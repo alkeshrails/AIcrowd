@@ -5,8 +5,9 @@ class LeaderboardsController < ApplicationController
   respond_to :js, :html
 
   def index
-    @current_round = current_round
-    @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
+    @current_round    = current_round
+    @post_challenge   = true if @challenge.completed? && params[:post_challenge] == "true"
+    @challenge_rounds = @challenge.challenge_round_summaries.where(round_status_cd: ['history', 'current'])
 
     current_round_id = if @current_round.blank?
                          0
@@ -34,21 +35,6 @@ class LeaderboardsController < ApplicationController
                           .per(10)
                           .order(:row_num)
     end
-  end
-
-  def submission_detail
-    leaderboard  = Leaderboard.find(params[:leaderboard_id])
-    @leaderboard = @challenge.leaderboards
-    @submissions = Submission.where(
-      participant_id:     params[:participant_id],
-      challenge_id:       params[:challenge_id],
-      challenge_round_id: leaderboard.challenge_round_id)
-      .order(created_at: :desc)
-    render js: concept(
-      Leaderboard::Cell,
-      @leaderboard,
-      challenge:   @challenge,
-      submissions: @submissions).call(:insert_submissions)
   end
 
   private
