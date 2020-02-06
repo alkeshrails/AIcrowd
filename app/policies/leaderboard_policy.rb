@@ -43,7 +43,7 @@ class LeaderboardPolicy < ApplicationPolicy
       <<~SQL
         (submitter_type = 'Participant' AND submitter_id = #{participant_id})
         #{team_check}
-        OR leaderboards.challenge_id IN
+        OR base_leaderboards.challenge_id IN
           (SELECT c.id
             FROM challenges c
             WHERE c.show_leaderboard IS TRUE
@@ -63,6 +63,7 @@ class LeaderboardPolicy < ApplicationPolicy
     end
 
     def resolve
+      binding.pry
       if participant&.admin?
         scope.all
       else
@@ -76,6 +77,7 @@ class LeaderboardPolicy < ApplicationPolicy
           ]
           scope.where(sql)
         else
+          binding.pry
           scope.where(participant_sql(participant))
         end
       end
