@@ -2,31 +2,13 @@ require 'rails_helper'
 
 describe "download dataset links" do
   let!(:challenge) { create :challenge, :running }
-  let!(:challenge_rules) do
-    create :challenge_rules,
-           challenge: challenge
-  end
-  let!(:participation_terms) do
-    create :participation_terms
-  end
+  let!(:participation_terms) { create :participation_terms }
   let!(:participant) { create :participant }
-  let!(:challenge_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: participant
-  end
+  let!(:challenge_participant) { create :challenge_participant, challenge: challenge, participant: participant }
   let!(:admin) { create :participant, :admin }
-  let!(:challenge_admin_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: admin
-  end
+  let!(:challenge_admin_participant) { create :challenge_participant, challenge: challenge, participant: admin }
   let!(:organizer) { create :participant, organizer: challenge.organizer }
-  let!(:challenge_organizer_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: organizer
-  end
+  let!(:challenge_organizer_participant) { create :challenge_participant, challenge: challenge, participant: organizer }
 
   context 'download link' do
     it 'participant' do

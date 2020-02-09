@@ -128,14 +128,14 @@ class SubmissionsController < ApplicationController
   end
 
   def set_challenge_rounds
-    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds = @challenge.started_rounds
   end
 
   def set_current_round
     @current_round = if params[:challenge_round_id].present?
                        ChallengeRound.find(params[:challenge_round_id].to_i)
                      else
-                       @challenge.challenge_rounds.where(active: true).first
+                       @challenge.active_round
                      end
   end
 

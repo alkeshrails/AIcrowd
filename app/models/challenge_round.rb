@@ -2,11 +2,8 @@ class ChallengeRound < ApplicationRecord
   include Markdownable
 
   belongs_to :challenge, inverse_of: :challenge_rounds
-  has_many :submissions,
-           dependent: :restrict_with_error
-  has_many :leaderboards
-  after_initialize :defaults,
-                   unless: :persisted?
+  has_many :submissions, dependent: :restrict_with_error
+  has_many :leaderboards, dependent: :destroy
 
   validates :challenge_round, presence: true
   validates :submission_limit,

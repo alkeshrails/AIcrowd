@@ -6,7 +6,7 @@ class TaskDatasetFilesController < ApplicationController
 
   def index
     @challenge          = Challenge.find(params[:challenge_id])
-    @challenge_rounds   = @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds   = @challenge.started_rounds
     @task_dataset_files = @clef_task.task_dataset_files
     js challenge_id: @challenge.id
   end

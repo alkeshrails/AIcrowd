@@ -12,7 +12,7 @@ class Leaderboard::Cell::ChallengeRoundPills < Leaderboard::Cell
   end
 
   def challenge_rounds
-    challenge.challenge_round_summaries.where(round_status_cd: ['history', 'current'])
+    challenge.started_rounds
   end
 
   def tab_class(challenge_round)

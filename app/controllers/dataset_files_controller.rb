@@ -11,7 +11,7 @@ class DatasetFilesController < ApplicationController
 
   def index
     @dataset_files    = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
-    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds = @challenge.started_rounds
   end
 
   def show; end
